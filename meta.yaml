@@ -1,0 +1,37 @@
+package:
+  name: 3mf2stl
+  version: "1.0.0"
+
+source:
+  git_url: https://github.com/lemgandi/3mf2stl
+
+build:
+  binary_relocation: true
+  script:
+    - export CPATH=$CONDA_PREFIX/include
+    - export LIBRARY_PATH=$CONDA_PREFIX/lib
+    - make CXXFLAGS="-I$CONDA_PREFIX/include" LDFLAGS="-L$CONDA_PREFIX/lib -lzip"
+    - mkdir -p $PREFIX/bin
+    - cp 3mf2stl $PREFIX/bin/
+  files:
+    - bin/3mf2stl
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - clangdev
+    - llvmdev
+    - gnuconfig
+    - make
+    - libzip
+    - pkg-config
+    - libcxx
+  host:
+    - libzip
+  run:
+    - libzip
+
+about:
+  home: https://github.com/lemgandi/3mf2stl
+  license: GPL-3
+  summary: "3mf2stl"
